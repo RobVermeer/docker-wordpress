@@ -1,0 +1,30 @@
+services:
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 1616:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ulla_user
+      WORDPRESS_DB_PASSWORD: ulla_pw
+      WORDPRESS_DB_NAME: ulla_db
+    volumes:
+      - wordpress:/var/www/html
+      - ./ullavs:/var/www/html/wp-content/themes/ullavs
+
+  db:
+    image: mysql:5.7
+    platform: linux/x86_64
+    restart: always
+    environment:
+      MYSQL_DATABASE: ulla_db
+      MYSQL_USER: ulla_user
+      MYSQL_PASSWORD: ulla_pw
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
